@@ -1,137 +1,171 @@
-# Music Data Analysis — Spotify Dataset
-
-An end-to-end exploratory data analysis and machine-learning project that investigates what makes songs popular and identifies genre-specific audio characteristics using the Spotify Tracks Dataset from Kaggle.
-
----
-
-## Project Overview
-
-This project answers two central questions:
-
-1. **What audio features drive popularity?** — Using correlation analysis and scatter plots to find the strongest predictors of a track's popularity score.
-2. **Do genres cluster naturally in audio-feature space?** — Using K-Means clustering (k=5) and DBSCAN to discover natural groupings, then validating them against ground-truth genre labels.
-
-### Key Findings
-
-- **Danceability and energy** show the strongest positive correlation with popularity across all genres.
-- **Acousticness and instrumentalness** are strong negative predictors of popularity — highly acoustic or instrumental tracks score lower on average.
-- **Explicit tracks** average ~6 popularity points higher than non-explicit tracks.
-- **K-Means with k=5** produces clusters that map closely to broad genre families: (1) energetic/electronic, (2) acoustic/classical, (3) hip-hop/r&b, (4) rock/metal, (5) pop/indie.
-- **Classical and jazz** are the most separable genres in PCA space; pop and indie overlap substantially.
-- **Tempo** alone is a weak predictor of popularity but is a strong discriminator between metal (high BPM) and classical (variable BPM).
-
----
-
-## Dataset
-
-**Source:** [Spotify Tracks Dataset on Kaggle](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)
-
-### Download Instructions
-
-1. Create a free Kaggle account at https://www.kaggle.com if you do not already have one.
-2. Install the Kaggle CLI:
-   ```bash
-   pip install kaggle
-   ```
-3. Place your `kaggle.json` API token in `~/.kaggle/kaggle.json` (download it from Kaggle → Account → Create API Token).
-4. Run:
-   ```bash
-   kaggle datasets download -d maharshipandya/-spotify-tracks-dataset -p data/
-   unzip data/-spotify-tracks-dataset.zip -d data/
-   ```
-5. The CSV will appear at `data/dataset.csv`. Update the `DATA_PATH` variable in Cell 3 of the notebook to point to it instead of using the synthetic data path.
-
-### Column Reference
-
-| Column | Description |
-|---|---|
-| `track_id` | Spotify track URI |
-| `artists` | Artist name(s) |
-| `album_name` | Album name |
-| `track_name` | Track name |
-| `popularity` | 0–100 popularity score |
-| `duration_ms` | Duration in milliseconds |
-| `explicit` | Whether the track has explicit lyrics |
-| `danceability` | 0.0–1.0 — suitability for dancing |
-| `energy` | 0.0–1.0 — perceptual intensity |
-| `key` | Musical key (0=C … 11=B) |
-| `loudness` | dB loudness (typically −60 to 0) |
-| `mode` | 1=major, 0=minor |
-| `speechiness` | 0.0–1.0 — presence of spoken words |
-| `acousticness` | 0.0–1.0 — acoustic confidence |
-| `instrumentalness` | 0.0–1.0 — probability of no vocals |
-| `liveness` | 0.0–1.0 — presence of a live audience |
-| `valence` | 0.0–1.0 — musical positiveness |
-| `tempo` | BPM |
-| `time_signature` | Estimated beats per bar |
-| `track_genre` | Genre label |
-
----
-
-## Project Structure
+<div align="center">
 
 ```
-music-data-analysis/
-├── data/                        # Place the Kaggle CSV here
-├── spotify_analysis.ipynb       # Main analysis notebook (10 cells)
-├── requirements.txt             # Pinned Python dependencies
-└── README.md                    # This file
+███╗   ███╗██╗   ██╗███████╗██╗ ██████╗    ██████╗  █████╗ ████████╗ █████╗
+████╗ ████║██║   ██║██╔════╝██║██╔════╝    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+██╔████╔██║██║   ██║███████╗██║██║         ██║  ██║███████║   ██║   ███████║
+██║╚██╔╝██║██║   ██║╚════██║██║██║         ██║  ██║██╔══██║   ██║   ██╔══██║
+██║ ╚═╝ ██║╚██████╔╝███████║██║╚██████╗    ██████╔╝██║  ██║   ██║   ██║  ██║
+╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝   ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+
+         █████╗ ███╗   ██╗ █████╗ ██╗  ██╗   ██╗███████╗██╗███████╗
+        ██╔══██╗████╗  ██║██╔══██╗██║  ╚██╗ ██╔╝██╔════╝██║██╔════╝
+        ███████║██╔██╗ ██║███████║██║   ╚████╔╝ ███████╗██║███████╗
+        ██╔══██║██║╚██╗██║██╔══██║██║    ╚██╔╝  ╚════██║██║╚════██║
+        ██║  ██║██║ ╚████║██║  ██║███████╗██║   ███████║██║███████║
+        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝   ╚══════╝╚═╝╚══════╝
+```
+
+### *Decode the DNA of Every Hit.*
+
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Spotify](https://img.shields.io/badge/Data-Spotify-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-Clustering-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+---
+
+> **An end-to-end analysis of the Spotify Tracks Dataset — uncovering what makes songs popular, why genres cluster the way they do, and what separates a viral hit from obscurity.**
+
+</div>
+
+---
+
+## ◈ Two Questions. Deep Answers.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                   ANALYSIS PIPELINE                             │
+│                                                                 │
+│  Spotify Dataset (3,000+ tracks, 10 genres)                     │
+│           │                                                     │
+│     ┌─────┴─────┐                                              │
+│     ▼           ▼                                              │
+│  QUESTION 1   QUESTION 2                                        │
+│  ─────────    ─────────                                         │
+│  What drives  Do genres                                         │
+│  popularity?  cluster                                           │
+│               naturally?                                        │
+│     │               │                                           │
+│     ▼               ▼                                           │
+│  Correlation    K-Means (k=5)                                   │
+│  Analysis       DBSCAN                                          │
+│  Scatter plots  PCA projection                                  │
+│  Feature heatmap Genre validation                               │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Setup & Running
+## ◈ Key Findings
 
-### Prerequisites
+> **Danceability and energy** are the strongest positive predictors of popularity.
 
-- Python 3.9 or later
-- pip
+> **Acousticness and instrumentalness** are strong negative predictors — highly acoustic or instrumental tracks score lower on average.
 
-### Installation
+> **Explicit tracks** average ~6 popularity points higher than non-explicit tracks.
+
+> **K-Means k=5** maps closely to real genre families:
+> - Cluster 1 → Energetic / Electronic
+> - Cluster 2 → Acoustic / Classical
+> - Cluster 3 → Hip-Hop / R&B
+> - Cluster 4 → Rock / Metal
+> - Cluster 5 → Pop / Indie
+
+> **Classical and jazz** are the most separable genres in PCA space. **Pop and indie** overlap substantially.
+
+> **Tempo** alone is weak at predicting popularity but strong at separating **metal** (high BPM) from **classical** (variable BPM).
+
+---
+
+## ◈ Audio Features Decoded
+
+| Feature | Range | What It Measures |
+|---|---|---|
+| `danceability` | 0.0–1.0 | Suitability for dancing |
+| `energy` | 0.0–1.0 | Perceptual intensity |
+| `acousticness` | 0.0–1.0 | Acoustic confidence |
+| `instrumentalness` | 0.0–1.0 | Probability of no vocals |
+| `valence` | 0.0–1.0 | Musical positiveness |
+| `tempo` | BPM | Beats per minute |
+| `loudness` | dB | Overall loudness |
+| `speechiness` | 0.0–1.0 | Presence of spoken words |
+| `popularity` | 0–100 | **Target variable** |
+
+---
+
+## ◈ Quick Start
 
 ```bash
-# Clone / navigate to the project folder
+# 1. Clone
+git clone https://github.com/isamkhan1809/music-data-analysis.git
 cd music-data-analysis
 
-# (Recommended) create a virtual environment
-python -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
-
-# Install dependencies
+# 2. Install
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-```
 
-### Launch the Notebook
-
-```bash
+# 3. Launch (runs on synthetic data by default — no Kaggle account needed)
 jupyter notebook spotify_analysis.ipynb
 ```
 
-Or with JupyterLab:
+### With Real Spotify Data
 
 ```bash
-pip install jupyterlab
-jupyter lab spotify_analysis.ipynb
+pip install kaggle
+# Place kaggle.json in ~/.kaggle/
+kaggle datasets download -d maharshipandya/-spotify-tracks-dataset -p data/
+unzip data/-spotify-tracks-dataset.zip -d data/
+# In Cell 3: set USE_SYNTHETIC = False
 ```
-
-### Run without Kaggle Data
-
-The notebook ships with a **synthetic data generator** (Cell 3) that produces 3,000 realistic tracks across 10 genres. You can run every cell end-to-end without downloading anything from Kaggle. When the real dataset is available, swap `USE_SYNTHETIC = True` to `False` in Cell 3.
 
 ---
 
-## Techniques Used
+## ◈ Notebook Structure
+
+| Cell | Content |
+|---|---|
+| 1 | Introduction & problem framing |
+| 2 | Imports |
+| 3 | Data loading (synthetic or real) |
+| 4 | Exploratory data analysis |
+| 5 | Popularity correlation analysis |
+| 6 | Feature distribution by genre |
+| 7 | K-Means clustering + PCA projection |
+| 8 | DBSCAN clustering |
+| 9 | Radar charts — genre audio fingerprints |
+| 10 | Conclusions & insights |
+
+---
+
+## ◈ Techniques
 
 | Area | Methods |
 |---|---|
-| Data Wrangling | pandas, numpy |
-| Visualization | matplotlib, seaborn (heatmaps, boxplots, radar charts, scatter plots) |
-| Clustering | K-Means (scikit-learn), DBSCAN |
-| Dimensionality Reduction | PCA (2-component projection for cluster visualization) |
-| Statistical Analysis | Pearson correlation, scipy descriptive stats |
+| Wrangling | pandas, numpy |
+| Visualisation | matplotlib, seaborn (heatmaps, boxplots, radar charts) |
+| Clustering | K-Means, DBSCAN |
+| Dimensionality Reduction | PCA (2-component) |
+| Statistics | Pearson correlation, scipy |
 
 ---
 
-## License
+## ◈ Project Structure
 
-This project is for educational purposes. The Spotify Tracks Dataset is distributed under the terms stated on its [Kaggle page](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset).
+```
+music-data-analysis/
+├── spotify_analysis.ipynb   ← Full analysis (10 cells)
+├── data/                    ← Place Kaggle CSV here
+├── requirements.txt
+└── README.md
+```
+
+---
+
+<div align="center">
+
+**The science of sound. The math behind the music.**
+
+*MIT License*
+
+</div>
