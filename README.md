@@ -18,7 +18,7 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=1DB954&center=true&vCenter=true&width=700&lines=Decode+the+DNA+of+Every+Hit+%F0%9F%8E%B5;What+Makes+a+Song+Go+Viral%3F;K-Means+%7C+DBSCAN+%7C+PCA+Clustering;Spotify+Tracks+Dataset+%E2%80%94+Deep+Analysis" alt="Typing SVG" />
 
-<img src="https://media.giphy.com/media/Ll22OhMLAlVDb8UQWe/giphy.gif" width="360" />
+<img src="https://media.giphy.com/media/3o6ZtqrBfUyHvMDQ2c/giphy.gif" width="360" />
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Spotify](https://img.shields.io/badge/Data-Spotify-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)
@@ -134,7 +134,8 @@ music-data-analysis/
 
 <br/>
 
-Built by [Isam Khan](https://github.com/isamkhan1809) &nbsp;|&nbsp;
+Into music tech, Spotify data, or ML-powered audio analysis?<br/>
+Let's connect — built by <a href="https://github.com/isamkhan1809">Isam Khan</a> &nbsp;|&nbsp;
 <a href="https://linkedin.com/in/isam-khan-3a1260292"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white&labelColor=000000"/></a>
 <a href="https://isamkhan.com"><img src="https://img.shields.io/badge/-isamkhan.com-00D9FF?style=flat-square&logo=googlechrome&logoColor=white&labelColor=000000"/></a>
 
