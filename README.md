@@ -16,14 +16,14 @@
         ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝   ╚══════╝╚═╝╚══════╝
 ```
 
-### *Decode the DNA of Every Hit.*
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=1DB954&center=true&vCenter=true&width=700&lines=Decode+the+DNA+of+Every+Hit+%F0%9F%8E%B5;What+Makes+a+Song+Go+Viral%3F;K-Means+%7C+DBSCAN+%7C+PCA+Clustering;Spotify+Tracks+Dataset+%E2%80%94+Deep+Analysis" alt="Typing SVG" />
+
+<img src="https://media.giphy.com/media/Ll22OhMLAlVDb8UQWe/giphy.gif" width="360" />
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Spotify](https://img.shields.io/badge/Data-Spotify-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-Clustering-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-
----
 
 > **An end-to-end analysis of the Spotify Tracks Dataset — uncovering what makes songs popular, why genres cluster the way they do, and what separates a viral hit from obscurity.**
 
@@ -42,16 +42,12 @@
 │     ┌─────┴─────┐                                              │
 │     ▼           ▼                                              │
 │  QUESTION 1   QUESTION 2                                        │
-│  ─────────    ─────────                                         │
-│  What drives  Do genres                                         │
-│  popularity?  cluster                                           │
-│               naturally?                                        │
+│  What drives  Do genres cluster naturally?                      │
+│  popularity?                                                    │
 │     │               │                                           │
 │     ▼               ▼                                           │
-│  Correlation    K-Means (k=5)                                   │
-│  Analysis       DBSCAN                                          │
-│  Scatter plots  PCA projection                                  │
-│  Feature heatmap Genre validation                               │
+│  Correlation    K-Means (k=5)  +  DBSCAN                        │
+│  Heatmaps       PCA projection + Genre validation               │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -61,20 +57,13 @@
 
 > **Danceability and energy** are the strongest positive predictors of popularity.
 
-> **Acousticness and instrumentalness** are strong negative predictors — highly acoustic or instrumental tracks score lower on average.
+> **Acousticness and instrumentalness** are strong negative predictors.
 
-> **Explicit tracks** average ~6 popularity points higher than non-explicit tracks.
+> **Explicit tracks** average ~6 popularity points higher than non-explicit.
 
-> **K-Means k=5** maps closely to real genre families:
-> - Cluster 1 → Energetic / Electronic
-> - Cluster 2 → Acoustic / Classical
-> - Cluster 3 → Hip-Hop / R&B
-> - Cluster 4 → Rock / Metal
-> - Cluster 5 → Pop / Indie
+> **K-Means k=5** maps to: Energetic/Electronic · Acoustic/Classical · Hip-Hop/R&B · Rock/Metal · Pop/Indie
 
-> **Classical and jazz** are the most separable genres in PCA space. **Pop and indie** overlap substantially.
-
-> **Tempo** alone is weak at predicting popularity but strong at separating **metal** (high BPM) from **classical** (variable BPM).
+> **Classical and jazz** are the most separable in PCA space. **Pop and indie** overlap substantially.
 
 ---
 
@@ -88,8 +77,6 @@
 | `instrumentalness` | 0.0–1.0 | Probability of no vocals |
 | `valence` | 0.0–1.0 | Musical positiveness |
 | `tempo` | BPM | Beats per minute |
-| `loudness` | dB | Overall loudness |
-| `speechiness` | 0.0–1.0 | Presence of spoken words |
 | `popularity` | 0–100 | **Target variable** |
 
 ---
@@ -97,25 +84,19 @@
 ## ◈ Quick Start
 
 ```bash
-# 1. Clone
 git clone https://github.com/isamkhan1809/music-data-analysis.git
 cd music-data-analysis
-
-# 2. Install
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-
-# 3. Launch (runs on synthetic data by default — no Kaggle account needed)
 jupyter notebook spotify_analysis.ipynb
+# Runs on synthetic data by default — no Kaggle account needed
 ```
 
 ### With Real Spotify Data
 
 ```bash
 pip install kaggle
-# Place kaggle.json in ~/.kaggle/
 kaggle datasets download -d maharshipandya/-spotify-tracks-dataset -p data/
-unzip data/-spotify-tracks-dataset.zip -d data/
 # In Cell 3: set USE_SYNTHETIC = False
 ```
 
@@ -125,28 +106,11 @@ unzip data/-spotify-tracks-dataset.zip -d data/
 
 | Cell | Content |
 |---|---|
-| 1 | Introduction & problem framing |
-| 2 | Imports |
-| 3 | Data loading (synthetic or real) |
-| 4 | Exploratory data analysis |
-| 5 | Popularity correlation analysis |
-| 6 | Feature distribution by genre |
-| 7 | K-Means clustering + PCA projection |
-| 8 | DBSCAN clustering |
-| 9 | Radar charts — genre audio fingerprints |
-| 10 | Conclusions & insights |
-
----
-
-## ◈ Techniques
-
-| Area | Methods |
-|---|---|
-| Wrangling | pandas, numpy |
-| Visualisation | matplotlib, seaborn (heatmaps, boxplots, radar charts) |
-| Clustering | K-Means, DBSCAN |
-| Dimensionality Reduction | PCA (2-component) |
-| Statistics | Pearson correlation, scipy |
+| 1–3 | Intro, imports, data loading |
+| 4–5 | EDA + popularity correlations |
+| 6–7 | Genre distributions + K-Means + PCA |
+| 8–9 | DBSCAN + radar charts |
+| 10 | Conclusions |
 
 ---
 
@@ -154,8 +118,8 @@ unzip data/-spotify-tracks-dataset.zip -d data/
 
 ```
 music-data-analysis/
-├── spotify_analysis.ipynb   ← Full analysis (10 cells)
-├── data/                    ← Place Kaggle CSV here
+├── spotify_analysis.ipynb   ← Full analysis
+├── data/
 ├── requirements.txt
 └── README.md
 ```
@@ -167,5 +131,11 @@ music-data-analysis/
 **The science of sound. The math behind the music.**
 
 *MIT License*
+
+<br/>
+
+Built by [Isam Khan](https://github.com/isamkhan1809) &nbsp;|&nbsp;
+<a href="https://linkedin.com/in/isam-khan-3a1260292"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white&labelColor=000000"/></a>
+<a href="https://isamkhan.com"><img src="https://img.shields.io/badge/-isamkhan.com-00D9FF?style=flat-square&logo=googlechrome&logoColor=white&labelColor=000000"/></a>
 
 </div>
